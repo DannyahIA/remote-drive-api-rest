@@ -23,11 +23,11 @@ func SetupRoutes() *gin.Engine {
 	{
 		file_manager.GET("/list-root-folders", controller.ListRootFoldersHandler)
 		file_manager.POST("/list-files", controller.ListFilesHandler)
-		file_manager.GET("search-files", controller.SearchFileHandler)
+		file_manager.POST("search-files", controller.SearchFileHandler)
 		file_manager.POST("/create-folder/:folder", controller.CreateFolderHandler)
 		file_manager.POST("/upload-file", controller.UploadFileHandler)
 		file_manager.DELETE("/delete-file", controller.DeleteFileHandler)
-		file_manager.GET("/download-file", controller.DownloadFileHandler)
+		file_manager.POST("/download-file", controller.DownloadFileHandler)
 		file_manager.PUT("/rename-file", controller.RenameFileHandler)
 	}
 	return r
