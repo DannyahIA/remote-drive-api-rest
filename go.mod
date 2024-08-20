@@ -3,7 +3,7 @@ module github.com/DannyahIA/personal-server
 go 1.22.5
 
 require (
-	github.com/DannyahIA/filemanager v1.4.0
+	github.com/DannyahIA/filemanager v1.4.1
 	github.com/gin-contrib/cors v1.7.2
 	github.com/gin-gonic/gin v1.10.0
 )

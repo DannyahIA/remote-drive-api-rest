@@ -76,13 +76,24 @@ func ListFilesHandler(c *gin.Context) {
 }
 
 func CreateFolderHandler(c *gin.Context) {
-	folder := c.Param("folder")
-	if folder == "" {
+	type Request struct {
+		Folder string 
+		Path   string
+	}
+	
+	request := Request{}
+
+	if err := c.ShouldBindJSON(&request); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if request.Folder == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "folder parameter is required"})
 		return
 	}
 
-	if err := filemanager.CreateFolder(folder); err != nil {
+	if err := filemanager.CreateFolder(request.Path, request.Folder); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
