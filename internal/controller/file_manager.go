@@ -21,6 +21,36 @@ func configFileManager() {
 	filemanager.DefaultRoot = dir
 }
 
+func ListStarredItemsHandler(c *gin.Context)  {
+	
+}
+
+func ListBackupItemsHandler(c *gin.Context)  {
+	configFileManager()
+
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		if err := os.Mkdir(dir, 0755); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+	}
+
+	files, err := filemanager.GetFolderItems("./backup")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	Files = files
+
+	if Files != nil {
+		c.JSON(http.StatusOK, Files)
+	} else {
+		c.JSON(http.StatusOK, []filemanager.File{})
+	}
+}
+
+
 func ListRootFoldersHandler(c *gin.Context) {
 	configFileManager()
 
@@ -30,6 +60,8 @@ func ListRootFoldersHandler(c *gin.Context) {
 			return
 		}
 	}
+
+	os
 
 	files, err := filemanager.GetRootFolders()
 	if err != nil {
